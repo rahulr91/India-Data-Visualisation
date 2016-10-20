@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>India Data Visualisation</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+</body>
+<script type="text/javascript">
+var url = 'https://data.gov.in/node/89969/datastore/export/json'
+
+d3.json(url, function(json) {
+    var rape_victims = []
+    for (var i = 0; i < json.data.length; i++) {
+        if (json.data[i][1] == 'RAPE') {
+            rape_victims.push(json.data[i])
+        }
+    }
+    console.log(rape_victims)
+    var canvas = d3.select('body')
+        .append('svg')
+        .attr('width', 1280)
+        .attr('height', 720)
+        .append('g')
+    var elements = canvas.selectAll('g')
+        .data(rape_victims)
+        .enter()
+        .append('g')
+        // elements.append('text')
+        //     .attr('x', 50)
+        //     .attr('y', function(d, i) {
+        //         return i * 20 + 10
+        //     })
+        //     .attr('dy', '.35em')
+        //     .text(function(d) {
+        //         return d
+        //     })
+        var y = d3.scaleLinear()
+    		.range([720, 0]);
+    elements.append('rect')
+        .attr('width', 25)
+        .attr('height', function(d) {
+            return (d[2] / 5
+            	)
+        })
+        .attr('x', function(d, i) {
+            return i * 29 + 15
+        })
+        .attr('y', function(d) {
+        	return 720-d[2]/5
+        })
+})
+</script>
+
+</html>
