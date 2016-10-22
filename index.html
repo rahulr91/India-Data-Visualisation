@@ -14,7 +14,7 @@ var url = 'https://data.gov.in/node/89969/datastore/export/json'
 d3.json(url, function(json) {
     var rape_victims = []
     for (var i = 0; i < json.data.length; i++) {
-        if (json.data[i][1] == 'RAPE') {
+        if (json.data[i][1] == 'RAPE' && json.data[i][0].indexOf('TOTAL') < 0) {
             rape_victims.push(json.data[i])
         }
     }
@@ -39,7 +39,7 @@ d3.json(url, function(json) {
         //     })
         var y = d3.scaleLinear()
     		.range([720, 0]);
-    elements.append('rect')
+   var bars =  elements.append('rect')
         .attr('width', 25)
         .attr('height', function(d) {
             return (d[2] / 5
@@ -48,9 +48,13 @@ d3.json(url, function(json) {
         .attr('x', function(d, i) {
             return i * 29 + 15
         })
+        .attr('y', 720)
+        bars.transition()
+        .duration(3000)
         .attr('y', function(d) {
-        	return 720-d[2]/5
+            return 720-d[2]/5
         })
+
 })
 </script>
 
