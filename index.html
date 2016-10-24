@@ -19,6 +19,9 @@ d3.json(url, function(json) {
         }
     }
     console.log(rape_victims)
+    var heading = d3.select('body').append("h2")
+    .attr("style", "margin-left: 10%;")
+    .text("Data visualization of rape victims in 2001")
     var canvas = d3.select('body')
         .append('svg')
         .attr('width', 1280)
