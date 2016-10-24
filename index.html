@@ -9,7 +9,7 @@
 <body>
 </body>
 <script type="text/javascript">
-var url = 'https://data.gov.in/node/89969/datastore/export/json'
+var url = './crime-against-women.json'
 
 d3.json(url, function(json) {
     var rape_victims = []
@@ -55,7 +55,7 @@ d3.json(url, function(json) {
             return i * 29 + 15
         })
         .attr('y', 650)
-        bars.transition()
+    bars.transition()
         .duration(2000)
         .attr('y', function(d) {
             return 650-d[2]/6
@@ -63,6 +63,19 @@ d3.json(url, function(json) {
         .attr('height', function(d) {
             return (d[2]/6)
         })
+    var text = elements.append('text')
+        .attr('x', function(d, i) {
+            return i*29+15
+        })
+        .attr('y', 640)
+        .text(function(d) {
+            return d[2]
+        })
+        text.transition()
+        .duration(2000)
+        .attr('y', function(d, i) {
+            return 645 - d[2]/6
+        } )
 
 })
 </script>
