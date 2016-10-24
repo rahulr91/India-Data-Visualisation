@@ -13,12 +13,29 @@ var url = './crime-against-women.json'
 
 d3.json(url, function(json) {
     var rape_victims = []
+    var total = 0
+    var index = 0;
+    var reportedCases = []
+
     for (var i = 0; i < json.data.length; i++) {
         if (json.data[i][1] == 'RAPE' && json.data[i][0].indexOf('TOTAL') < 0) {
             rape_victims.push(json.data[i])
-        }
+            index = i;
+            reportedCases.push(parseInt(json.data[i][2]))
+            }
     }
+    total = parseInt(json.data[index+2][2])
+
+    // var barHeight = d3.scaleLinear()
+    // .domain([0, d3.max(reportedCases)])
+    // .range([0, 700])
+
+    var color = d3.scaleLinear()
+    .domain([0, d3.max(reportedCases)]).interpolate(d3.interpolateHcl)
+    .range([d3.rgb("#007aff"),d3.rgb("#fff500")])
+
     console.log(rape_victims)
+    console.log(total)
     var heading = d3.select('body').append("h2")
     .attr("style", "margin-left: 10%;")
     .text("Data visualization of rape victims in 2001")
@@ -46,6 +63,7 @@ d3.json(url, function(json) {
             .attr("transform", function(d) {
                 return "rotate(-90)"
             })
+
         var y = d3.scaleLinear()
     		.range([720, 0]);
    var bars =  elements.append('rect')
@@ -55,6 +73,9 @@ d3.json(url, function(json) {
             return i * 29 + 15
         })
         .attr('y', 650)
+        .attr("fill", function(d) {
+          return color(parseInt(d[2]))
+        })
     bars.transition()
         .duration(2000)
         .attr('y', function(d) {
@@ -76,8 +97,6 @@ d3.json(url, function(json) {
         .attr('y', function(d, i) {
             return 645 - d[2]/6
         } )
-
 })
 </script>
-
 </html>
