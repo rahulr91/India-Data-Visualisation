@@ -4,6 +4,18 @@
 <head>
     <title>India Data Visualisation</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <style type="text/css">
+    div {
+      width: 60px;
+      height: 60px;
+      float: left;
+      margin: 1px;
+      text-align: center;
+      padding-top: 30px;
+      box-sizing: padding-box;
+    }
+
+    </style>
 </head>
 
 <body>
@@ -11,24 +23,35 @@
 <script type="text/javascript">
 var url = './crime-against-women.json'
 
+for(let i = 1; i < 13; i++) {
+  d3.select('body').append('div')
+  .attr("style", "background-color: #ff0;")
+  .attr("id", i)
+  .text(2000+i)
+  .on("click", function(){
+    document.getElementsByTagName('svg').innerHTML = ''
+    console.log("clicked "+i)
+    var year = 1+i;
+    draw(year)
+  })
+}
+function draw(year) {
+d3.select("svg").remove()
 d3.json(url, function(json) {
     var rape_victims = []
     var total = 0
-    var index = 0;
+    var index = 0
+    //var year = 2
     var reportedCases = []
 
     for (var i = 0; i < json.data.length; i++) {
         if (json.data[i][1] == 'RAPE' && json.data[i][0].indexOf('TOTAL') < 0) {
             rape_victims.push(json.data[i])
             index = i;
-            reportedCases.push(parseInt(json.data[i][2]))
+            reportedCases.push(parseInt(json.data[i][year]))
             }
     }
-    total = parseInt(json.data[index+2][2])
-
-    // var barHeight = d3.scaleLinear()
-    // .domain([0, d3.max(reportedCases)])
-    // .range([0, 700])
+    total = parseInt(json.data[index+year][2])
 
     var color = d3.scaleLinear()
     .domain([0, d3.max(reportedCases)]).interpolate(d3.interpolateHcl)
@@ -36,9 +59,10 @@ d3.json(url, function(json) {
 
     console.log(rape_victims)
     console.log(total)
-    var heading = d3.select('body').append("h2")
-    .attr("style", "margin-left: 10%;")
-    .text("Data visualization of rape victims in 2001")
+    // var heading = d3.select('body').append("h2")
+    // .attr("style", "margin-left: 10%;")
+    // .text("Data visualization of rape victims in 2001")
+
     var canvas = d3.select('body')
         .append('svg')
         .attr('width', 1280)
@@ -74,15 +98,15 @@ d3.json(url, function(json) {
         })
         .attr('y', 650)
         .attr("fill", function(d) {
-          return color(parseInt(d[2]))
+          return color(parseInt(d[year]))
         })
     bars.transition()
         .duration(2000)
         .attr('y', function(d) {
-            return 650-d[2]/6
+            return 650-d[year]/6
         })
         .attr('height', function(d) {
-            return (d[2]/6)
+            return (d[year]/6)
         })
     var text = elements.append('text')
         .attr('x', function(d, i) {
@@ -90,13 +114,14 @@ d3.json(url, function(json) {
         })
         .attr('y', 640)
         .text(function(d) {
-            return d[2]
+            return d[year]
         })
         text.transition()
         .duration(2000)
         .attr('y', function(d, i) {
-            return 645 - d[2]/6
+            return 645 - d[year]/6
         } )
 })
+}
 </script>
 </html>
