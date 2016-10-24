@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>India Data Visualisation</title>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <style type="text/css">
-    div {
+    .years {
       width: 60px;
       height: 30px;
       float: left;
@@ -14,20 +13,63 @@
       vertical-align: middle;
       padding-top: 30px;
       box-sizing: padding-box;
+      cursor: pointer;
+    }
+    #nav {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0;
+        text-align: center;
+        font-size: xx-large;
+        background: #00796b;
+        color: white;
+        vertical-align: middle;
+        box-sizing: inherit;
+        /*display: inline-block;*/
+    }
+    #name {
+        /*margin: 0 auto;*/
+        font-weight: bold;
+        padding: 10px 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    #years {
+        width: 5%;
+        height:auto;
+        display: inline-block;
+    }
+    #chart {
+        width: 94%;
+        align-content: center;
+        text-align: center;
+        display: inline-block;
     }
 
     </style>
 </head>
 
 <body>
+    <nav>
+        <div id="nav">
+        <a id="name">
+        Visualization of crimes committed against women during 2001-2012</a>
+    </div>
+    </nav>
+    
+    <div id="years">
+    </div>
+    <div id="chart">
+    </div>
 </body>
 <script type="text/javascript">
 var url = './crime-against-women.json'
 
 for(let i = 1; i < 13; i++) {
-  d3.select('body').append('div')
+  d3.select('#years').append('div')
   .attr("style", "background-color: #ff0;")
-  .attr("id", i)
+  .attr("class", "years")
   .text(2000+i)
   .on("click", function(){
     document.getElementsByTagName('svg').innerHTML = ''
@@ -52,10 +94,11 @@ d3.json(url, function(json) {
             }
     }
     total = parseInt(json.data[index+year][2])
+    var maxRC = d3.max(reportedCases)
 
     var color = d3.scaleLinear()
-    .domain([0, d3.max(reportedCases)]).interpolate(d3.interpolateHcl)
-    .range([d3.rgb("#007aff"),d3.rgb("#fff500")])
+    .domain([0, maxRC/2, maxRC]).interpolate(d3.interpolateHcl)
+    .range(["green","yellow","red"])
 
     console.log(rape_victims)
     console.log(total)
@@ -65,7 +108,7 @@ d3.json(url, function(json) {
     var heightScale = d3.scaleLinear()
     .domain([0,d3.max(reportedCases)])
     .range([0,500])
-    var canvas = d3.select('body')
+    var canvas = d3.select('#chart')
         .append('svg')
         .attr('width', 1280)
         .attr('height', 800)
