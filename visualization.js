@@ -1,17 +1,40 @@
 var url = './crime-against-women.json'
 
-for (let i = 1; i < 13; i++) {
-  d3.select('#years').append('div')
-    .attr('style', 'background-color: #ff0;')
-    .attr('class', 'years')
-    .text(2000 + i)
-    .on('click', function () {
-      document.getElementsByTagName('svg').innerHTML = ''
-      console.log('clicked ' + i)
-      var year = 1 + i
-      draw(year)
-    })
-}
+d3.json(url, function (json) {
+  var crimes = []
+  var prev = ''
+  var crimehead = d3.select('#crimehead')
+  for (var i = 0; i < json.data.length; i++) {
+    var crime = json.data[i][1]
+    if (crime != prev) {
+      prev = crime
+      crimehead.append('div')
+        .attr('style', 'background-color: #f0f;')
+        .attr('class', 'crimes')
+        .text(crime)
+        // .on('click', function () {
+
+        // })
+
+    }
+  }
+
+
+
+  for (let i = 1; i < 13; i++) {
+    d3.select('#years').append('div')
+      .attr('style', 'background-color: #ff0;')
+      .attr('class', 'years')
+      .text(2000 + i)
+      .on('click', function () {
+        document.getElementsByTagName('svg').innerHTML = ''
+        // console.log('clicked ' + i)
+        var year = 1 + i
+        draw(year)
+      })
+  }
+})
+
 function draw (year) {
   d3.select('svg').remove()
   d3.json(url, function (json) {
@@ -27,6 +50,7 @@ function draw (year) {
         reportedCases.push(parseInt(json.data[i][year]))
       }
     }
+
     total = parseInt(json.data[index + year][2])
     var maxRC = d3.max(reportedCases)
 
@@ -34,11 +58,6 @@ function draw (year) {
       .domain([0, maxRC / 2, maxRC]).interpolate(d3.interpolateHcl)
       .range(['green', 'yellow', 'red'])
 
-    console.log(rape_victims)
-    console.log(total)
-    // var heading = d3.select('body').append("h2")
-    // .attr("style", "margin-left: 10%;")
-    // .text("Data visualization of rape victims in 2001")
     var heightScale = d3.scaleLinear()
       .domain([0, d3.max(reportedCases)])
       .range([0, 500])
