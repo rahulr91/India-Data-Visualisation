@@ -7,10 +7,11 @@
     <style type="text/css">
     div {
       width: 60px;
-      height: 60px;
+      height: 30px;
       float: left;
       margin: 1px;
       text-align: center;
+      vertical-align: middle;
       padding-top: 30px;
       box-sizing: padding-box;
     }
@@ -41,7 +42,6 @@ d3.json(url, function(json) {
     var rape_victims = []
     var total = 0
     var index = 0
-    //var year = 2
     var reportedCases = []
 
     for (var i = 0; i < json.data.length; i++) {
@@ -62,7 +62,9 @@ d3.json(url, function(json) {
     // var heading = d3.select('body').append("h2")
     // .attr("style", "margin-left: 10%;")
     // .text("Data visualization of rape victims in 2001")
-
+    var heightScale = d3.scaleLinear()
+    .domain([0,d3.max(reportedCases)])
+    .range([0,500])
     var canvas = d3.select('body')
         .append('svg')
         .attr('width', 1280)
@@ -103,10 +105,10 @@ d3.json(url, function(json) {
     bars.transition()
         .duration(2000)
         .attr('y', function(d) {
-            return 650-d[year]/6
+            return 650-heightScale(d[year])
         })
         .attr('height', function(d) {
-            return (d[year]/6)
+            return heightScale(d[year])
         })
     var text = elements.append('text')
         .attr('x', function(d, i) {
@@ -119,7 +121,7 @@ d3.json(url, function(json) {
         text.transition()
         .duration(2000)
         .attr('y', function(d, i) {
-            return 645 - d[year]/6
+            return 645 - heightScale(d[year])
         } )
 })
 }
