@@ -1,0 +1,91 @@
+
+    #nav {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0;
+        text-align: center;
+        font-size: xx-large;
+        background: #4a148c;
+        color: white;
+        vertical-align: middle;
+        box-sizing: inherit;
+        /*display: inline-block;*/
+    }
+    #name {
+        /*margin: 0 auto;*/
+        font-weight: bold;
+        padding: 10px 10px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    #chart {
+        width: 79%;
+        align-content: center;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .crimes {
+      width: 190px;
+      height: 50px;
+      float: left;
+      margin: 1px;
+      text-align: center;
+      vertical-align: middle;
+      padding-top: 10px;
+      box-sizing: padding-box;
+      cursor: pointer;
+      display: inline-block;
+    }
+    #crimehead {
+      width:190px;
+      display: inline-block;
+      vertical-align: top;
+    }
+    #selection {
+      margin-top: 60px;
+      width: 20%;
+      display: inline-block;
+    }
+    svg {
+      float: left;
+    }
+    .years {
+      width: 60px;
+      height: 30px;
+      float: left;
+      margin: 1px;
+      /*margin-left: 50px;*/
+      text-align: center;
+      vertical-align: middle;
+      padding-top: 30px;
+      box-sizing: padding-box;
+      cursor: pointer;
+      /*display: inline-block;*/
+    }
+    #years {
+        width: 60px;
+        height:auto;
+        display: inline-block;
+    }
+    .reports {
+      font-size: smaller;
+    }
+
+    @media all and (max-width: 1301px) {
+      #selection {
+        width: 100%;
+        margin-top: 1px
+      }
+      #years {
+        width: 100%;
+      }
+      #crimehead {
+        width: 100%;
+      }
+      #chart {
+        width: 100%;
+      }
+    }
