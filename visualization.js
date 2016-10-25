@@ -86,23 +86,6 @@ function draw (crime, year) {
       .enter()
       .append('g')
 
-    // appends the state name to the canvas under each bar on the graph
-    elements.append('text')
-      .attr('x', function (d, i) {
-        return -770
-      })
-      .attr('y', function (d, i) {
-        return 25 + i * 29
-      })
-      .attr('dy', '.35em')
-      .text(function (d) {
-        str = d[0][0] + d[0].slice(1).toLowerCase()
-        return str
-      })
-      .attr('transform', function (d) {
-        return 'rotate(-90)'
-      })
-
     // appends a rectangle on the graph
     var bars = elements.append('rect')
       .attr('width', 25)
@@ -123,6 +106,24 @@ function draw (crime, year) {
       })
       .attr('height', function (d) {
         return heightScale(d[year])
+      })
+
+    // appends the state name to the canvas under each bar on the graph
+    elements.append('text')
+      .attr('x', function (d, i) {
+        return -775
+      })
+      .attr('y', function (d, i) {
+        return 25 + i * 29
+      })
+      .attr('dy', '.35em')
+      .attr('id', 'states')
+      .text(function (d) {
+        str = d[0][0] + d[0].slice(1).toLowerCase()
+        return str
+      })
+      .attr('transform', function (d) {
+        return 'rotate(-90)'
       })
 
     // appends the number of cases reported above the bars on the graph
