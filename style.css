@@ -71,7 +71,7 @@
         display: inline-block;
     }
     .reports {
-      font-size: smaller;
+      font-size: x-small;
     }
 
     @media all and (max-width: 1301px) {
