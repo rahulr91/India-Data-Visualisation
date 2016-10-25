@@ -4,54 +4,53 @@ d3.json(url, function (json) {
   var crimes = []
   var prev = ''
   var crimehead = d3.select('#crimehead')
-  for (var i = 0; i < json.data.length; i++) {
-    var crime = json.data[i][1]
+  for (let i = 0; i < json.data.length; i++) {
+    let crime = json.data[i][1]
     if (crime != prev) {
       prev = crime
+      str = crime[0] + crime.slice(1).toLowerCase()
       crimehead.append('div')
-        .attr('style', 'background-color: #f0f;')
+        .attr('style', 'background-color: #00b8d4;')
         .attr('class', 'crimes')
-        .text(crime)
-        // .on('click', function () {
-
-        // })
-
+        .text(str)
+        .on('click', function () {
+          d3.select('#years').html('')
+          drawYears(crime)
+          draw(crime, 13)
+        })
     }
   }
+  drawYears('RAPE')
+})
 
-
-
+function drawYears (crime) {
   for (let i = 1; i < 13; i++) {
     d3.select('#years').append('div')
       .attr('style', 'background-color: #ff0;')
       .attr('class', 'years')
       .text(2000 + i)
       .on('click', function () {
-        document.getElementsByTagName('svg').innerHTML = ''
         // console.log('clicked ' + i)
         var year = 1 + i
-        draw(year)
+        draw(crime, year)
       })
   }
-})
+}
 
-function draw (year) {
+function draw (crime, year) {
+  console.log(crime, year)
   d3.select('svg').remove()
   d3.json(url, function (json) {
-    var rape_victims = []
-    var total = 0
-    var index = 0
+    var victims = []
     var reportedCases = []
 
     for (var i = 0; i < json.data.length; i++) {
-      if (json.data[i][1] == 'RAPE' && json.data[i][0].indexOf('TOTAL') < 0) {
-        rape_victims.push(json.data[i])
-        index = i
+      if (json.data[i][1] == crime && json.data[i][0].indexOf('TOTAL') < 0) {
+        victims.push(json.data[i])
         reportedCases.push(parseInt(json.data[i][year]))
       }
     }
 
-    total = parseInt(json.data[index + year][2])
     var maxRC = d3.max(reportedCases)
 
     var color = d3.scaleLinear()
@@ -66,8 +65,12 @@ function draw (year) {
       .attr('width', 1050)
       .attr('height', 800)
       .append('g')
+    canvas.append('text')
+      .attr('x', 100)
+      .attr('y', 100)
+      .text('Crime: ' + crime + ', ' + 'Year: ' + (2000 + year - 1))
     var elements = canvas.selectAll('g')
-      .data(rape_victims)
+      .data(victims)
       .enter()
       .append('g')
     elements.append('text')
@@ -111,6 +114,7 @@ function draw (year) {
         return i * 29 + 15
       })
       .attr('y', 640)
+      .attr('class', 'reports')
       .text(function (d) {
         return d[year]
       })
