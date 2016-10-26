@@ -25,12 +25,14 @@ d3.json(url, function (json) {
   drawYears('RAPE')
 })
 
-// Creates the clickable years divs for the year selection 
+// Creates the clickable years divs for the year selection
 function drawYears (crime) {
   for (let i = 1; i < 13; i++) {
     d3.select('#years').append('div')
       .attr('style', 'background-color: #ff0;')
       .attr('class', 'years')
+      .append('p')
+      .attr('style', 'vertical-align: middle;')
       .text(2000 + i)
       .on('click', function () {
         var year = 1 + i
