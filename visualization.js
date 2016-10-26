@@ -31,13 +31,17 @@ function drawYears (crime) {
     d3.select('#years').append('div')
       .attr('style', 'background-color: #ff0;')
       .attr('class', 'years')
-      .append('p')
-      .attr('style', 'vertical-align: middle;')
-      .text(2000 + i)
       .on('click', function () {
         var year = 1 + i
         draw(crime, year)
       })
+      .append('p')
+      .attr('style', 'vertical-align: middle;')
+      .text(2000 + i)
+  // .on('click', function () {
+  //   var year = 1 + i
+  //   draw(crime, year)
+  // })
   }
 }
 
