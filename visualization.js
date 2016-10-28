@@ -1,6 +1,7 @@
-var url = './crime-against-women.json'
+var crimeDataUrl = './crime-against-women.json'
+var populationUrl = './state-wise-population.json'
 
-d3.json(url, function (json) {
+d3.json(crimeDataUrl, function (json) {
 
   // Creates the divs to select the various crimes
   var crimes = []
@@ -38,17 +39,13 @@ function drawYears (crime) {
       .append('p')
       .attr('style', 'vertical-align: middle;')
       .text(2000 + i)
-  // .on('click', function () {
-  //   var year = 1 + i
-  //   draw(crime, year)
-  // })
   }
 }
 
 // Takes the name and year of the crime and draws the graph using d3
 function draw (crime, year) {
   d3.select('svg').remove()
-  d3.json(url, function (json) {
+  d3.json(crimeDataUrl, function (json) {
     var stateWiseVictims = []
     var reportedCases = []
 
