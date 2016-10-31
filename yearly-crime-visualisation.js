@@ -2,8 +2,6 @@ var crimeDataUrl = './crime-against-women.json'
 var populationUrl = './state-wise-population.json'
 
 d3.json(crimeDataUrl, function (json) {
-
-  // Creates the divs to select the various crimes
   var crimes = []
   var prev = ''
   var crimehead = d3.select('#crimehead')
@@ -21,6 +19,7 @@ d3.json(crimeDataUrl, function (json) {
         })
     }
   }
+  draw('RAPE')
 })
 
 function draw (crime) {
@@ -81,7 +80,6 @@ function draw (crime) {
           return color(d)
         })
 
-      // adds transition for the bars
       bars.transition()
         .duration(2000)
         .attr('y', function (d) {
@@ -117,7 +115,6 @@ function draw (crime) {
           return total[i]
         })
 
-      // adds transition to the text to change position along with the bar graph's transition
       text.transition()
         .duration(2000)
         .attr('y', function (d, i) {

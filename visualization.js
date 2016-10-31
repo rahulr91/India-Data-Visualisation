@@ -23,7 +23,8 @@ d3.json(crimeDataUrl, function (json) {
         })
     }
   }
-  drawYears('RAPE')
+  drawYears('TOTAL CRIMES AGAINST WOMEN')
+  draw('TOTAL CRIMES AGAINST WOMEN', 13)
 })
 
 // Creates the clickable years divs for the year selection

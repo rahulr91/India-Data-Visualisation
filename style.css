@@ -19,6 +19,15 @@
         display: inline-block;
         vertical-align: middle;
     }
+    #link {
+            display:block;
+            float: right;
+            font-size: 0.8em;
+            width: auto;
+            height: inherit;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
 
     #chart {
         width: 79%;
@@ -91,7 +100,28 @@
       font-size: 0.82em;
     }
 
-    @media all and (max-width: 1301px) {
+    @media all and (min-width: 1125px) and (max-width: 1301px) {
+      .years {
+        width: 45px;
+        font-size: small;
+      }
+      .crimes {
+        width: 120px;
+        height: 65px;
+      }
+      #selection {
+        width: 17%;
+        display: inline-block;
+      }
+      #crimehead {
+        width: 120px;
+      }
+      #chart {
+        width: 82%;
+      }
+    }
+
+    @media all and (max-width: 1124px) {
       #selection {
         width: 100%;
         margin-top: 1px
